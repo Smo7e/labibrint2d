@@ -4,14 +4,16 @@ import { SIZE_MAP } from "../App";
 
 interface IWallProps {
     position: Vector3;
+    color?: string;
+    key_: string;
 }
 
-const Wall: React.FC<IWallProps> = ({ position }) => {
+const Wall: React.FC<IWallProps> = ({ position, color = "blue", key_ }) => {
     return (
-        <RigidBody position={position} lockTranslations lockRotations>
-            <mesh>
+        <RigidBody position={position} lockTranslations lockRotations key={key_}>
+            <mesh key={`mesh${key_}`}>
                 <boxGeometry args={[SIZE_MAP, SIZE_MAP, SIZE_MAP]} />
-                <meshStandardMaterial color={"red"} transparent opacity={0.5} />
+                <meshStandardMaterial color={color} transparent opacity={0.5} />
             </mesh>
         </RigidBody>
     );
