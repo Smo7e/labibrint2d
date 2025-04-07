@@ -6,11 +6,7 @@ import { setLvl } from "../App";
 
 const Character: React.FC<any> = ({ floorRef }) => {
     const [currentLvl, setCurrentLvl] = useState<number>(0);
-    const defultPosition = new Vector3(
-        -40 - 5 * currentLvl + currentLvl * 200 - currentLvl,
-        -45 - 5 * currentLvl - currentLvl,
-        0
-    );
+    const defultPosition = new Vector3(-40 - currentLvl, -45 - currentLvl, 0);
 
     const [target, setTarget] = useState<Vector3>(defultPosition);
     const { camera, scene } = useThree();
