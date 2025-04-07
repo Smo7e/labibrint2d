@@ -2,18 +2,18 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { RapierRigidBody, RigidBody, useRapier } from "@react-three/rapier";
 import React, { useEffect, useRef, useState } from "react";
 import { Box3, Mesh, Raycaster, Vector2, Vector3 } from "three";
-import { setLvl } from "../App";
+import { setLvl, SIZE_MAP } from "../App";
 
-const Character: React.FC<any> = ({ floorRef }) => {
+const Character: React.FC<any> = ({ floorRef, winFunc }) => {
     const [currentLvl, setCurrentLvl] = useState<number>(0);
-    const defultPosition = new Vector3(-40 - currentLvl, -45 - currentLvl, 0);
+    const defultPosition = new Vector3(currentLvl * 200 + SIZE_MAP, SIZE_MAP, 0);
 
     const [target, setTarget] = useState<Vector3>(defultPosition);
     const { camera, scene } = useThree();
-    camera.position.set(200 * currentLvl, 0, 5);
+    camera.position.set(defultPosition.x, SIZE_MAP * 10, 5);
     const ref = useRef<RapierRigidBody>(null);
     const { rapier, world } = useRapier();
-    const speed = 200;
+    const speed = 40;
     useEffect(() => {
         if (!rapier || !world) return;
         const handleMouseDown = (e: MouseEvent) => {
@@ -51,16 +51,17 @@ const Character: React.FC<any> = ({ floorRef }) => {
             const meshTp = scene.children.filter((el) => {
                 return el.name === "meshTp";
             })[currentLvl] as Mesh;
-            console.log(meshTp);
             const rigidPlayer = scene.children.filter((el) => {
                 return el.name === "rigidPlayer";
             })[0];
             const meshPlayer = rigidPlayer.children[0] as Mesh;
+
             if (checkMeshIntersection(meshTp, meshPlayer)) {
                 setCurrentLvl((el) => {
+                    if (el === 9) {
+                        winFunc();
+                    }
                     setLvl(el + 1);
-                    console.log(el + 1);
-
                     return el + 1;
                 });
                 camera.zoom /= 1.1;
@@ -83,14 +84,14 @@ const Character: React.FC<any> = ({ floorRef }) => {
             direction.normalize();
             direction.multiplyScalar(speed);
 
-            rigidBody.setLinvel(direction, true);
+            rigidBody.applyImpulse(direction, true);
         } else {
             rigidBody.setLinvel(new Vector3(0, 0, 0), true);
         }
     });
 
     return (
-        <RigidBody name="rigidPlayer" type="dynamic" ref={ref} position={defultPosition} lockTranslations>
+        <RigidBody name="rigidPlayer" type="dynamic" ref={ref} position={defultPosition}>
             <mesh>
                 <sphereGeometry args={[1.5, 32, 32]} />
                 <meshStandardMaterial color="red" />

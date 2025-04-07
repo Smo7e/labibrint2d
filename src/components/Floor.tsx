@@ -1,31 +1,18 @@
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import React, { forwardRef, useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useReducer, useState } from "react";
 import { getLvl, getUpdate, setNeedUpdate, SIZE_MAP } from "../App";
 import { arrLvl } from ".";
 import Wall from "./Wall";
 
 const Floor = forwardRef((props: any, ref: any) => {
-    const [trueArr, setTrueArr] = useState<number[][][]>(
-        getNeedIndexArr().map((el) => {
-            return arrLvl[el];
-        })
-    );
-    function getNeedIndexArr(): number[] {
-        let needArr = [getLvl()];
-        if (getLvl() - 1 >= 0) needArr.push(getLvl() - 1);
-        if (getLvl() + 1 <= 9) needArr.push(getLvl() + 1);
-        return needArr;
-    }
+    const [trueArr, setTrueArr] = useState<number[][][]>();
+    const [_, forceUpdate] = useReducer((x) => x + 1, 0);
 
     useEffect(() => {
         const interval = setInterval(() => {
             if (getUpdate()) {
                 setNeedUpdate();
-                setTrueArr(
-                    getNeedIndexArr().map((el) => {
-                        return arrLvl[el];
-                    })
-                );
+                forceUpdate();
             }
         }, 1000);
         return () => {
@@ -35,7 +22,7 @@ const Floor = forwardRef((props: any, ref: any) => {
 
     return (
         <>
-            {trueArr.map((lvl, lvlIndex) => (
+            {arrLvl.map((lvl, lvlIndex) => (
                 <React.Fragment key={`lvl-${lvlIndex}`}>
                     {lvl.map((row, rowIndex) => (
                         <React.Fragment key={`row-${rowIndex}`}>
@@ -45,28 +32,24 @@ const Floor = forwardRef((props: any, ref: any) => {
                                     return (
                                         <Wall
                                             key={key}
-                                            position={[
-                                                rowNumIndex * SIZE_MAP -
-                                                    (lvl[0].length * SIZE_MAP) / 2 +
-                                                    200 * getNeedIndexArr()[lvlIndex],
-                                                rowIndex * SIZE_MAP - (lvl.length * SIZE_MAP) / 2,
-                                                0,
-                                            ]}
+                                            position={[rowIndex * SIZE_MAP + lvlIndex * 200, rowNumIndex * SIZE_MAP, 0]}
                                             key_={key} // This prop name is a bit redundant, consider changing it.
+                                            visible={
+                                                getLvl() === lvlIndex ||
+                                                getLvl() === lvlIndex - 1 ||
+                                                getLvl() === lvlIndex + 1
+                                                    ? true
+                                                    : false
+                                            }
                                         />
                                     );
                                 } else if (rowNum === 2) {
                                     return (
                                         <mesh
                                             key={key}
-                                            position={[
-                                                rowNumIndex * SIZE_MAP -
-                                                    (lvl[0].length * SIZE_MAP) / 2 +
-                                                    200 * getNeedIndexArr()[lvlIndex],
-                                                rowIndex * SIZE_MAP - (lvl.length * SIZE_MAP) / 2,
-                                                0,
-                                            ]}
+                                            position={[rowIndex * SIZE_MAP + lvlIndex * 200, rowNumIndex * SIZE_MAP, 0]}
                                             name="meshTp"
+                                            visible={getLvl() === lvlIndex || getLvl() === lvlIndex + 1 ? true : false}
                                         >
                                             <boxGeometry args={[SIZE_MAP, SIZE_MAP, SIZE_MAP]} />
                                             <meshStandardMaterial />

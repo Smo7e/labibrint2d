@@ -1,0 +1,41 @@
+.win-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh; /* Занять всю высоту экрана */
+    width: 50vw;
+    background-color: rgba(18, 226, 18, 0.5); /* Полупрозрачный красный фон */
+    color: white; /* Цвет текста */
+    text-align: center; /* Центрирование текста */
+    border-radius: 10px; /* Закругленные углы */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Тень */
+    left: 25vw;
+    top: 25vh;
+}
+
+.win-title {
+    font-size: 3rem; /* Размер шрифта для заголовка */
+    margin-bottom: 20px; /* Отступ снизу */
+}
+
+.win-buttons {
+    display: flex;
+    gap: 10px; /* Отступ между кнопками */
+}
+
+.win-button {
+    padding: 10px 20px; /* Отступ внутри кнопки */
+    font-size: 1.2rem; /* Размер шрифта для кнопок */
+    color: white; /* Цвет текста кнопок */
+    background-color: #007bff; /* Цвет фона кнопок */
+    border: none; /* Убираем границу */
+    border-radius: 5px; /* Закругленные углы кнопок */
+    cursor: pointer; /* Курсор при наведении */
+    transition: background-color 0.3s; /* Плавный переход цвета */
+}
+
+.win-button:hover {
+    background-color: #0056b3; /* Цвет кнопки при наведении */
+}
