@@ -1,5 +1,3 @@
-import { SIZE_MAP } from "../App";
-
 export const arrLvl = [
     [
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],

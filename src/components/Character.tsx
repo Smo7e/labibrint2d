@@ -6,14 +6,14 @@ import { setLvl, SIZE_MAP } from "../App";
 
 const Character: React.FC<any> = ({ floorRef, winFunc }) => {
     const [currentLvl, setCurrentLvl] = useState<number>(0);
-    const defultPosition = new Vector3(currentLvl * 200 + SIZE_MAP, SIZE_MAP, 0);
+    const defultPosition = new Vector3(currentLvl * 200 + SIZE_MAP, SIZE_MAP, 1);
 
     const [target, setTarget] = useState<Vector3>(defultPosition);
     const { camera, scene } = useThree();
     camera.position.set(defultPosition.x, SIZE_MAP * 10, 5);
     const ref = useRef<RapierRigidBody>(null);
     const { rapier, world } = useRapier();
-    const speed = 40;
+    const speed = 20;
     useEffect(() => {
         if (!rapier || !world) return;
         const handleMouseDown = (e: MouseEvent) => {
@@ -72,7 +72,7 @@ const Character: React.FC<any> = ({ floorRef, winFunc }) => {
             clearInterval(interval);
         };
     }, [currentLvl]);
-    useFrame((state, delta) => {
+    useFrame(() => {
         if (!ref.current) return;
 
         const rigidBody = ref.current;
@@ -86,12 +86,12 @@ const Character: React.FC<any> = ({ floorRef, winFunc }) => {
 
             rigidBody.applyImpulse(direction, true);
         } else {
-            rigidBody.setLinvel(new Vector3(0, 0, 0), true);
+            //rigidBody.setLinvel(new Vector3(0, 0, 0), true);
         }
     });
 
     return (
-        <RigidBody name="rigidPlayer" type="dynamic" ref={ref} position={defultPosition}>
+        <RigidBody name="rigidPlayer" type="dynamic" ref={ref} position={defultPosition} lockRotations>
             <mesh>
                 <sphereGeometry args={[1.5, 32, 32]} />
                 <meshStandardMaterial color="red" />

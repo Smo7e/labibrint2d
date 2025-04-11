@@ -1,14 +1,13 @@
-import { Canvas, useThree } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import Character from "./components/Character";
 import "./App.css";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Floor from "./components/Floor";
-import { Box3, Mesh, Object3D } from "three";
+import { Object3D } from "three";
 import GameTimer from "./components/GamerTimer";
 import Leaderboard from "./components/Leaderbord";
 import Win from "./components/Win";
-import { OrbitControls } from "@react-three/drei";
 
 let lvl = 0;
 let needUpdata = false;
@@ -41,7 +40,6 @@ const App: React.FC = () => {
         setGameStats(gameTimerRef.current.getGameStats());
         setEpages(EPAGES.WIN);
     };
-    console.log(gameStats);
 
     return (
         <>

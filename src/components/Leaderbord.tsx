@@ -84,27 +84,26 @@ export const getLeaderboard = async (): Promise<LeaderboardEntry[]> => {
 
 const Leaderboard: React.FC<LeaderboardProps> = ({ onClose }) => {
     const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
-    //console.log(leaderboard);
 
-    const clearLeaderboard = async () => {
-        const password = prompt("Введите пароль для удаления данных: ");
-        if (password === "Password") {
-            const db = await openDB();
-            const transaction = db.transaction("leaderboard", "readwrite");
-            const store = transaction.objectStore("leaderboard");
-            store.clear();
+    // const clearLeaderboard = async () => {
+    //     const password = prompt("Введите пароль для удаления данных: ");
+    //     if (password === "Password") {
+    //         const db = await openDB();
+    //         const transaction = db.transaction("leaderboard", "readwrite");
+    //         const store = transaction.objectStore("leaderboard");
+    //         store.clear();
 
-            transaction.oncomplete = () => {
-                setLeaderboard([]);
-                alert("Таблица лидеров очищена!");
-            };
-            transaction.onerror = () => {
-                alert("Произошла ошибка при очистке данных.");
-            };
-        } else {
-            alert("Неверный пароль!");
-        }
-    };
+    //         transaction.oncomplete = () => {
+    //             setLeaderboard([]);
+    //             alert("Таблица лидеров очищена!");
+    //         };
+    //         transaction.onerror = () => {
+    //             alert("Произошла ошибка при очистке данных.");
+    //         };
+    //     } else {
+    //         alert("Неверный пароль!");
+    //     }
+    // };
 
     useEffect(() => {
         const fetchLeaderboard = async () => {

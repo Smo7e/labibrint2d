@@ -1,11 +1,11 @@
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import React, { forwardRef, useEffect, useReducer, useState } from "react";
+import React, { forwardRef, useEffect, useMemo, useReducer } from "react";
 import { getLvl, getUpdate, setNeedUpdate, SIZE_MAP } from "../App";
 import { arrLvl } from ".";
 import Wall from "./Wall";
 
 const Floor = forwardRef((props: any, ref: any) => {
-    const [trueArr, setTrueArr] = useState<number[][][]>();
+    console.log(props);
     const [_, forceUpdate] = useReducer((x) => x + 1, 0);
 
     useEffect(() => {
@@ -19,6 +19,18 @@ const Floor = forwardRef((props: any, ref: any) => {
             clearInterval(interval);
         };
     }, []);
+    const floorMesh = useMemo(
+        () => (
+            <RigidBody lockRotations lockTranslations position={[0, 0, -0.5]}>
+                <mesh ref={ref}>
+                    <boxGeometry args={[5000, 500, 1]} />
+                    <meshStandardMaterial color="green" />
+                </mesh>
+                <CuboidCollider args={[5000, 500, 1]} />
+            </RigidBody>
+        ),
+        [ref]
+    );
 
     return (
         <>
@@ -64,13 +76,7 @@ const Floor = forwardRef((props: any, ref: any) => {
                 </React.Fragment>
             ))}
 
-            <RigidBody position={[0, 0, -0.5]} lockRotations lockTranslations>
-                <mesh ref={ref}>
-                    <boxGeometry args={[5000, 500, 1]} />
-                    <meshStandardMaterial color="green" />
-                </mesh>
-                <CuboidCollider args={[5000, 500, 1]} />
-            </RigidBody>
+            {floorMesh}
         </>
     );
 });
