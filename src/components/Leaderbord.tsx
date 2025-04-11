@@ -116,14 +116,39 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ onClose }) => {
 
     return (
         <>
-            <div style={{ display: "flex", height: "80vh", width: "80vw" }}>
-                <div className="leaderboard">
-                    <div style={{ width: "100%", textAlign: "center", fontSize: "3vw" }}>Таблица лидеров</div>
-                    <table style={{ width: "100%", textAlign: "center" }}>
+            <div
+                style={{
+                    display: "flex",
+                    height: "70vh",
+                    textAlign: "center",
+                    alignItems: "center",
+                }}
+            >
+                <div className="leaderboard" style={{ width: "100%" }}>
+                    <div
+                        style={{
+                            marginTop: "2vh",
+                            fontSize: "min(3vw, 3vh)",
+                        }}
+                    >
+                        Таблица лидеров
+                    </div>
+                    <table style={{ width: "100%", textAlign: "center", borderCollapse: "collapse" }}>
                         <thead>
-                            <tr style={{ fontSize: "min(2vw, 3vh)", height: "min(6.5vh, 6.5vw)", width: "100%" }}>
-                                <th>№</th>
-                                <th>Имя</th>
+                            <tr
+                                style={{
+                                    fontSize: "min(3vw, 3vh)",
+
+                                    height: "6vh",
+
+                                    width: "100%",
+                                    borderBottom: "1px solid #ccc",
+                                    backgroundColor: "red",
+                                    padding: 0,
+                                }}
+                            >
+                                <th style={{ borderRight: "1px solid #ccc" }}>№</th>
+                                <th style={{ borderRight: "1px solid #ccc" }}>Имя</th>
                                 <th>Время(сек)</th>
                             </tr>
                         </thead>
@@ -132,10 +157,17 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ onClose }) => {
                             {leaderboard.map((entry, index) => (
                                 <tr
                                     key={index}
-                                    style={{ fontSize: "min(2vw, 3vh)", height: "min(6.5vh, 6.5vw)", width: "100%" }}
+                                    style={{
+                                        fontSize: "min(3vw, 3vh)",
+
+                                        height: "5vh",
+                                        width: "100%",
+                                        borderBottom: "1px solid #eee",
+                                        backgroundColor: "green",
+                                    }}
                                 >
-                                    <td>{index + 1}</td>
-                                    <td>{entry.name}</td>
+                                    <td style={{ borderRight: "1px solid #ccc" }}>{index + 1}</td>
+                                    <td style={{ borderRight: "1px solid #ccc" }}>{entry.name}</td>
                                     <td>{entry.time}</td>
                                 </tr>
                             ))}
@@ -144,7 +176,17 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ onClose }) => {
                 </div>
             </div>
             <button
-                style={{ fontSize: "min(2vw, 3vh)", height: "min(6.5vh, 6.5vw)" }}
+                style={{
+                    fontSize: "clamp(1rem, 2vw, 2rem)",
+                    height: "clamp(2.5rem, 6.5vh, 6.5rem)",
+                    position: "fixed",
+                    left: 0,
+                    bottom: 0,
+                    cursor: "pointer",
+                    backgroundColor: "#f0f0f0",
+                    border: "1px solid #ccc",
+                    borderRadius: "5px",
+                }}
                 onClick={() => onClose(EPAGES.MENU)}
             >
                 Назад

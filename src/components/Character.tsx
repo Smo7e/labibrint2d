@@ -40,6 +40,22 @@ const Character: React.FC<any> = ({ floorRef, winFunc }) => {
             window.removeEventListener("mousedown", handleMouseDown);
         };
     }, [rapier, world]);
+    useEffect(() => {
+        const handleResize = () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const baseZoom = 5;
+            const newZoom = baseZoom * (Math.min(height, width) / 1080);
+
+            camera.zoom = newZoom;
+            camera.updateProjectionMatrix();
+        };
+
+        handleResize();
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
     function checkMeshIntersection(mesh1: Mesh, mesh2: Mesh): boolean {
         const box1 = new Box3().setFromObject(mesh1);
         const box2 = new Box3().setFromObject(mesh2);
@@ -72,6 +88,7 @@ const Character: React.FC<any> = ({ floorRef, winFunc }) => {
             clearInterval(interval);
         };
     }, [currentLvl]);
+
     useFrame(() => {
         if (!ref.current) return;
 

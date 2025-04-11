@@ -2,11 +2,93 @@
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     height: 100vh;
     width: 100vw;
-    background-color: #d36e6e;
+    background-image: url("../public/bgiMenu.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
+}
+/* GameMenu.css */
+.game-menu {
+    display: flex;
+    justify-content: space-evenly; /* или space-between, если хотите чтобы кнопки были по краям */
+    padding: 10px; /* добавьте отступы, если нужно */
+    background-color: #cbe7c0; /* Добавьте цвет фона, если хотите */
+}
+
+.game-menu__button {
+    width: 48%; /* немного меньше 50%, чтобы был небольшой отступ между кнопками */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4caf50; /* Зеленый цвет */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Плавное изменение цвета при наведении */
+}
+.glow-on-hover {
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+}
+
+.glow-on-hover:before {
+    content: "";
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #000;
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 400% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
 }

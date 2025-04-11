@@ -8,6 +8,8 @@ import { Object3D } from "three";
 import GameTimer from "./components/GamerTimer";
 import Leaderboard from "./components/Leaderbord";
 import Win from "./components/Win";
+import GameMenu from "./components/GameMenu";
+import MusicPlayer from "./components/MusicPlayer";
 
 let lvl = 0;
 let needUpdata = false;
@@ -44,14 +46,7 @@ const App: React.FC = () => {
     return (
         <>
             {epages === EPAGES.MENU ? (
-                <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-                    <button style={{ width: "100%" }} onClick={() => setEpages(EPAGES.GAME)} type="button">
-                        Играть
-                    </button>
-                    <button style={{ width: "100%" }} onClick={() => setEpages(EPAGES.TABLES)} type="button">
-                        Таблицы
-                    </button>
-                </div>
+                <GameMenu setEpages={setEpages} />
             ) : epages === EPAGES.TABLES ? (
                 <Leaderboard onClose={setEpages} />
             ) : epages === EPAGES.GAME ? (
@@ -74,6 +69,7 @@ const App: React.FC = () => {
                         </Physics>
                     </Canvas>
                     <GameTimer ref={gameTimerRef} />
+                    <MusicPlayer />
                 </>
             ) : epages === EPAGES.WIN ? (
                 <Win gameStats={gameStats} setEpages={setEpages} />

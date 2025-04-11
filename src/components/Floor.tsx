@@ -45,7 +45,7 @@ const Floor = forwardRef((props: any, ref: any) => {
                                         <Wall
                                             key={key}
                                             position={[rowIndex * SIZE_MAP + lvlIndex * 200, rowNumIndex * SIZE_MAP, 0]}
-                                            key_={key} // This prop name is a bit redundant, consider changing it.
+                                            key_={key}
                                             visible={
                                                 getLvl() === lvlIndex ||
                                                 getLvl() === lvlIndex - 1 ||
